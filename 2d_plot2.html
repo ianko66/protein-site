@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>2D Protein Visualizer</title>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<style>
+  html,body{margin:0;padding:0;background:#fff;font-family:system-ui,Segoe UI,Roboto,Arial;}
+  .page{max-width:1100px;margin:0 auto;padding:10px;}
+  .plot-wrapper{}
+  .info-row{display:flex;gap:12px;align-items:flex-start;margin-top:10px;}
+  .reset button{
+    background:#111;color:#fff;border:none;border-radius:8px;padding:8px 12px;
+    font-size:14px;cursor:pointer;opacity:0.95;
+  }
+  .reset button:hover{opacity:1}
+  .infobox{border:1px solid #e3e3e3;background:#fafafa;border-radius:8px;padding:10px;font-size:14px;
+           width:520px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .kv{display:grid;grid-template-columns:300px 1fr;gap:6px 10px;margin-top:6px;}
+  .k{color:#666;}
+</style>
+</head>
+<body>
+  <div class="page">
+    <div class="plot-wrapper">
+      <div>                            <div id="plot2d" class="plotly-graph-div" style="height:490px; width:800px;"></div>            <script type="text/javascript">                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("plot2d")) {                    Plotly.newPlot(                        "plot2d",                        [{"legendgroup":"Animal Protein","marker":{"color":"#FF4500","line":{"color":"rgba(0,0,0,0.6)","width":1},"size":9},"mode":"markers","name":"Animal Protein","text":["Chicken breast","Turkey breast","Egg whites","Cod","Tilapia","Shrimp","Canned tuna (water)","Lean pork loin","Ground turkey 93% lean","Salmon"],"x":{"dtype":"f8","bdata":"nHPOOeecSkDvaYTlnkZHQKOLLrrookdAchzHcRzHRkC3bdu2bdtGQAEAAAAAoERAnN70pje9RUCKndiJndhMQL2E9hLaS0VAAAAAAAAAWkA="},"y":{"dtype":"f8","bdata":"IYQQQgghQECx3NMIyz1BQLrooosuulZAchzHcRzHS0D0PM\u002fzPM9HQFZVVVVV1URAnN70pje9RUCxEzuxEztDQExoL6G9hEJAAAAAAAAASUA="},"type":"scatter","hovertemplate":"\u003cb\u003e%{text}\u003c\u002fb\u003e\u003cbr\u003e\u003cb\u003eCalories (per 10g protein):\u003c\u002fb\u003e %{x:.2f}\u003cbr\u003e\u003cb\u003eWeight, in grams (per 10g protein):\u003c\u002fb\u003e %{y:.2f}\u003cextra\u003e\u003c\u002fextra\u003e"},{"legendgroup":"Dairy","marker":{"color":"#9370DB","line":{"color":"rgba(0,0,0,0.6)","width":1},"size":9},"mode":"markers","name":"Dairy","text":["Greek yogurt (non-fat)","Cottage cheese (low-fat)","Skim milk"],"x":{"dtype":"f8","bdata":"AAAAAACATUBGF1100UVWQAEAAAAAAFlA"},"y":{"dtype":"f8","bdata":"AAAAAAAAWUC66KKLLrpWQOLh4eHhYXJA"},"type":"scatter","hovertemplate":"\u003cb\u003e%{text}\u003c\u002fb\u003e\u003cbr\u003e\u003cb\u003eCalories (per 10g protein):\u003c\u002fb\u003e %{x:.2f}\u003cbr\u003e\u003cb\u003eWeight, in grams (per 10g protein):\u003c\u002fb\u003e %{y:.2f}\u003cextra\u003e\u003c\u002fextra\u003e"},{"legendgroup":"Grains","marker":{"color":"#D2B48C","line":{"color":"rgba(0,0,0,0.6)","width":1},"size":9},"mode":"markers","name":"Grains","text":["Quinoa (cooked)","Oats (dry)"],"x":{"dtype":"f8","bdata":"AAAAAADAckAtLS0tLa1sQA=="},"y":{"dtype":"f8","bdata":"AAAAAABAb0BpaWlpaWlNQA=="},"type":"scatter","hovertemplate":"\u003cb\u003e%{text}\u003c\u002fb\u003e\u003cbr\u003e\u003cb\u003eCalories (per 10g protein):\u003c\u002fb\u003e %{x:.2f}\u003cbr\u003e\u003cb\u003eWeight, in grams (per 10g protein):\u003c\u002fb\u003e %{y:.2f}\u003cextra\u003e\u003c\u002fextra\u003e"},{"legendgroup":"Plant Protein","marker":{"color":"#228B22","line":{"color":"rgba(0,0,0,0.6)","width":1},"size":9},"mode":"markers","name":"Plant Protein","text":["Lentils (cooked)","Chickpeas (cooked)","Black beans (cooked)","Edamame","Tofu (firm)","Tempeh","Seitan","Peas (cooked)"],"x":{"dtype":"f8","bdata":"x3Ecx3EcYEAAAAAAAKBpQMhxHMdxnGJAjC666KKLXUAAAAAAAMBXQP\u002f\u002f\u002f\u002f\u002f\u002f\u002f1hAJUmSJEmSTEAAAAAAAIBhQA=="},"y":{"dtype":"f8","bdata":"chzHcRzHW0AAAAAAAEBfQHIcx3Ecx1tAuuiiiy66VkAAAAAAAEBfQA3lNZTXUEpA9DzP8zzPR0BWVVVVVdVkQA=="},"type":"scatter","hovertemplate":"\u003cb\u003e%{text}\u003c\u002fb\u003e\u003cbr\u003e\u003cb\u003eCalories (per 10g protein):\u003c\u002fb\u003e %{x:.2f}\u003cbr\u003e\u003cb\u003eWeight, in grams (per 10g protein):\u003c\u002fb\u003e %{y:.2f}\u003cextra\u003e\u003c\u002fextra\u003e"},{"legendgroup":"Supplement Protein","marker":{"color":"#1E90FF","line":{"color":"rgba(0,0,0,0.6)","width":1},"size":9},"mode":"markers","name":"Supplement Protein","text":["Whey protein isolate","Casein protein","Soy protein powder","Pea protein powder"],"x":{"dtype":"f8","bdata":"AAAAAABgSEAAAAAAAABEQFtaWlpaWkZAAAAAAADAR0A="},"y":{"dtype":"f8","bdata":"AAAAAAAAKUCO4ziO4zgmQIiHh4eHhydAAAAAAAAAKUA="},"type":"scatter","hovertemplate":"\u003cb\u003e%{text}\u003c\u002fb\u003e\u003cbr\u003e\u003cb\u003eCalories (per 10g protein):\u003c\u002fb\u003e %{x:.2f}\u003cbr\u003e\u003cb\u003eWeight, in grams (per 10g protein):\u003c\u002fb\u003e %{y:.2f}\u003cextra\u003e\u003c\u002fextra\u003e"},{"legendgroup":"Vegetables","marker":{"color":"#32CD32","line":{"color":"rgba(0,0,0,0.6)","width":1},"size":9},"mode":"markers","name":"Vegetables","text":["Spinach (raw)"],"x":{"dtype":"f8","bdata":"yz2NsNzTU0A="},"y":{"dtype":"f8","bdata":"3NMIyz2NdUA="},"type":"scatter","hovertemplate":"\u003cb\u003e%{text}\u003c\u002fb\u003e\u003cbr\u003e\u003cb\u003eCalories (per 10g protein):\u003c\u002fb\u003e %{x:.2f}\u003cbr\u003e\u003cb\u003eWeight, in grams (per 10g protein):\u003c\u002fb\u003e %{y:.2f}\u003cextra\u003e\u003c\u002fextra\u003e"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"title":{"text":"Calories (per 10g protein)"},"range":[0,330.0],"autorange":false,"showgrid":true,"gridcolor":"lightgray","zeroline":true,"zerolinecolor":"black","zerolinewidth":2},"yaxis":{"title":{"text":"Weight, in grams (per 10g protein)"},"range":[0,379.3103448275862],"autorange":false,"showgrid":true,"gridcolor":"lightgray","zeroline":true,"zerolinecolor":"black","zerolinewidth":2},"margin":{"t":5,"l":50,"r":0,"b":50},"height":490,"width":800,"showlegend":true,"legend":{"title":{"text":"Category"}}},                        {"scrollZoom": true, "displaylogo": false, "responsive": true}                    )                };            </script>        </div>
+      <div class="info-row">
+        <div class="infobox" id="selBox">Hover over a point to see values.</div>
+        <div class="reset"><button id="resetBtn">Reset view</button></div>
+      </div>
+    </div>
+  </div>
+<script>
+  const selBox = document.getElementById('selBox');
+  const plotDiv = document.getElementById('plot2d');
+  const HOV_X_LABEL = "Calories (per 10g protein)";
+  const HOV_Y_LABEL = "Weight, in grams (per 10g protein)";
+  const MONEY_X = false;
+  const MONEY_Y = false;
+  const INIT_X_RANGE = [0, 330.0];
+  const INIT_Y_RANGE = [0, 379.3103448275862];
+
+  function fmtMoney(n){ return '$' + Number(n).toFixed(2); }
+  function fmtNum(n){ return Number(n).toFixed(2); }
+
+  // Reset View button restores initial ranges
+  document.getElementById('resetBtn').addEventListener('click', function(){
+    const relayout = {};
+    if (INIT_X_RANGE) relayout['xaxis.range'] = INIT_X_RANGE;
+    if (INIT_Y_RANGE) relayout['yaxis.range'] = INIT_Y_RANGE;
+    Plotly.relayout('plot2d', relayout);
+  });
+
+  // Clamp ranges so the lower bound never goes below 0 (handles zoom AND pan).
+  let clampGuard = false;
+  plotDiv.on('plotly_relayout', function(e){
+    if (clampGuard) return;
+
+    // Handle double-click autorange resets too
+    const wantsAutoX = (e && (e['xaxis.autorange'] === true));
+    const wantsAutoY = (e && (e['yaxis.autorange'] === true));
+
+    // Get current ranges from layout
+    const xr = (plotDiv.layout.xaxis && plotDiv.layout.xaxis.range) ? plotDiv.layout.xaxis.range.slice() : null;
+    const yr = (plotDiv.layout.yaxis && plotDiv.layout.yaxis.range) ? plotDiv.layout.yaxis.range.slice() : null;
+
+    const initX = INIT_X_RANGE;
+    const initY = INIT_Y_RANGE;
+
+    let update = {};
+    let changed = false;
+
+    // If autorange was requested, reset to [0, initMax]
+    function currentMax(axisRange, layoutRange) {
+      if (axisRange && axisRange[1] != null) return axisRange[1];
+      if (layoutRange && layoutRange.length === 2 && layoutRange[1] != null) return layoutRange[1];
+      return 1;
+    }
+
+    if (wantsAutoX) {
+      const xmax = currentMax(initX, xr);
+      update['xaxis.range'] = [0, xmax];
+      changed = true;
+    }
+    if (wantsAutoY) {
+      const ymax = currentMax(initY, yr);
+      update['yaxis.range'] = [0, ymax];
+      changed = true;
+    }
+
+    // Clamp negative mins after any zoom/pan
+    const xrNow = (update['xaxis.range'] ? update['xaxis.range'] : xr);
+    const yrNow = (update['yaxis.range'] ? update['yaxis.range'] : yr);
+
+    if (xrNow && xrNow.length === 2 && xrNow[0] < 0) {
+      const span = xrNow[1] - xrNow[0];
+      update['xaxis.range'] = [0, Math.max(0 + span, 1e-9)];
+      changed = true;
+    }
+    if (yrNow && yrNow.length === 2 && yrNow[0] < 0) {
+      const span = yrNow[1] - yrNow[0];
+      update['yaxis.range'] = [0, Math.max(0 + span, 1e-9)];
+      changed = true;
+    }
+
+    if (changed) {
+      clampGuard = true;
+      Plotly.relayout('plot2d', update).then(function(){ clampGuard = false; });
+    }
+  });
+
+  // Hover info
+  plotDiv.on('plotly_hover', function(ev){
+    if(!ev || !ev.points || !ev.points.length) return;
+    const p = ev.points[0];
+    const name = p.text || '(unknown)';
+    const xv = p.x, yv = p.y;
+    const xStr = MONEY_X ? fmtMoney(xv) : fmtNum(xv);
+    const yStr = MONEY_Y ? fmtMoney(yv) : fmtNum(yv);
+
+    selBox.innerHTML =
+      '<div><strong>' + name + '</strong></div>' +
+      '<div class="kv">' +
+        '<div class="k">' + HOV_X_LABEL + ':</div><div>' + xStr + '</div>' +
+        '<div class="k">' + HOV_Y_LABEL + ':</div><div>' + yStr + '</div>' +
+      '</div>';
+  });
+</script>
+</body>
+</html>
