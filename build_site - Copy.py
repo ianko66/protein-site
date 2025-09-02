@@ -42,6 +42,14 @@ fixed_colors = {
     "Plant Protein": "#228B22",
     "Supplement Protein": "#1E90FF",
     "Dairy": "#9370DB",
+    "Poultry": "#FFA500",
+    "Fish & Seafood": "#1E90FF",
+    "Red Meat & Game": "#B22222",
+    "Eggs": "#8B4513",
+    "Legumes": "#2E8B57",
+    "Soy": "#20B2AA",
+    "Nuts & Seeds": "#A0522D",
+    "Supplements": "#4B0082",
 }
 fallback_palette = [
     "#1F77B4", "#FF7F0E", "#2CA02C", "#D62728", "#9467BD",
@@ -80,7 +88,7 @@ for cat in categories:
         hovertemplate="<b>%{text}</b><br>"
                       "<b>Calories (per 10g protein):</b> %{x:.2f}<br>"
                       "<b>Cost (per 10g protein):</b> $%{y:.2f}<br>"
-                      "<b>Weight, in grams (per 10g protein):</b> %{z:.2f}<br>"
+                      "<b>Amount, in grams (per 10g protein):</b> %{z:.2f}<br>"
                       "<extra></extra>",
         name=cat, legendgroup=cat
     ))
@@ -92,7 +100,7 @@ fig3d.update_layout(
     scene=dict(
         xaxis=dict(title="Calories (per 10g protein)", range=[0, x_max], ticks="outside"),
         yaxis=dict(title="Cost (per 10g protein)",     range=[0, y_max], tickprefix="$", tickformat=".2f", ticks="outside"),
-        zaxis=dict(title="Weight, in grams (per 10g protein)", range=[0, z_max], ticks="outside"),
+        zaxis=dict(title="Amount, in grams (per 10g protein)", range=[0, z_max], ticks="outside"),
         camera=dict(eye=base_eye),
         aspectmode="cube"
     ),
@@ -173,7 +181,7 @@ def write_custom_3d_html(fig, filename: str, base_eye_val: dict):
       '<div class="kv">' +
         '<div class="k">Calories (per 10g protein):</div><div>' + fmtNum(cal) + '</div>' +
         '<div class="k">Cost (per 10g protein):</div><div>' + fmtMoney(cost) + '</div>' +
-        '<div class="k">Weight, in grams (per 10g protein):</div><div>' + fmtNum(grams) + '</div>' +
+        '<div class="k">Amount, in grams (per 10g protein):</div><div>' + fmtNum(grams) + '</div>' +
       '</div>';
   }});
 </script>
@@ -183,15 +191,20 @@ def write_custom_3d_html(fig, filename: str, base_eye_val: dict):
         f.write(html)
 
 # =========================================================
-# 2D PAGES (dynamic hover labels per chart + clamp zoom & pan + reset button to the right of info box)
+# 2D PAGES (dynamic hover labels per chart + clamp zoom & pan + reset button)
 # =========================================================
 def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
                          x_range=None, y_range=None,
                          money_x: bool=False, money_y: bool=False):
     """Render a single 2D chart page with correct, dynamic hover labels, axis clamping, and Reset View button inline with info box (button on right)."""
     plot_height = 490  # chart area height inside the card/iframe
-    fig.update_layout(height=plot_height, width=800, showlegend=True, legend=dict(title="Category"),
-                      margin=dict(t=5, l=50, r=0, b=50))
+    fig.update_layout(
+        height=plot_height,
+        width=800,
+        showlegend=True,
+        legend=dict(title="Category"),
+        margin=dict(t=5, l=50, r=0, b=50)
+    )
 
     if x_range is not None:
         fig.update_xaxes(range=x_range, autorange=False)
@@ -402,11 +415,11 @@ make_2d("Calories_for_10g_protein","Cost_for_10g_protein",
         "2d_plot1.html", xlim=[0, x_max], ylim=[0, 1])
 
 make_2d("Calories_for_10g_protein","Grams_for_10g_protein",
-        "Calories (per 10g protein)","Weight, in grams (per 10g protein)",
+        "Calories (per 10g protein)","Amount, in grams (per 10g protein)",
         "2d_plot2.html", xlim=[0, x_max], ylim=[0, z_max])
 
 make_2d("Cost_for_10g_protein","Grams_for_10g_protein",
-        "Cost (per 10g protein)","Weight, in grams (per 10g protein)",
+        "Cost (per 10g protein)","Amount, in grams (per 10g protein)",
         "2d_plot3.html", xlim=[0, 1], ylim=[0, z_max])
 
 # ---------- Write 3D page ----------
@@ -509,8 +522,6 @@ document.querySelectorAll("table.datatable thead th").forEach((th, colIndex) => 
     with open(filename, "w", encoding="utf-8") as f:
         f.write(html)
 
-
-
 # Build the table page
 write_data_table_html(df, "data_table.html")
 
@@ -521,186 +532,66 @@ index_html = """<!doctype html>
 <meta charset="utf-8">
 <title>Protein Visualizer</title>
 <style>
-  :root{
-    --sidebar-w: 320px;   /* enough space for 300px-wide ads + padding */
-    --main-w:    900px;   /* your main content width */
-    --gap:       16px;
-  }
-  *{box-sizing:border-box}
   body{font-family:sans-serif;background:#fafafa;margin:0;}
-
-  /* 3-column shell: left ads / main / right ads */
-  .shell{
-    display:grid;
-    grid-template-columns: var(--sidebar-w) minmax(0, var(--main-w)) var(--sidebar-w);
-    gap: var(--gap);
-    max-width: calc(var(--sidebar-w) + var(--main-w) + var(--sidebar-w) + var(--gap)*2);
-    margin: 0 auto;
-    padding: 20px 20px 40px;
-  }
-
-  /* Left / Right ad sidebars */
-  .aside{ position: relative; }
-  .ad-stack{
-    display:flex;
-    flex-direction:column;
-    gap:16px;
-    position: sticky;
-    top: 16px;            /* keeps ads visible while scrolling */
-    align-items:center;   /* centers fixed-width ad blocks */
-  }
-
-  /* Generic ad card style */
-  .ad-card{
-    background:#fff;
-    border:1px solid #ddd;
-    border-radius:8px;
-    padding:10px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#666;
-    font-size:14px;
-    text-align:center;
-  }
-
-  /* Standard Ad Sizes */
-  .ad-300x250 { width:300px; height:250px; }
-  .ad-300x600 { width:300px; height:600px; }
-  .ad-160x600 { width:160px; height:600px; }
-
-  /* Main content */
-  .container{width:100%;}
+  .container{max-width:900px;margin:auto;padding:20px;}
   .card{margin:20px 0;padding:10px;background:#fff;border:1px solid #ddd;border-radius:8px;}
   .card h2{margin-left:25px;} /* shift headers 25px to the right */
-  .note {
-    font-size: 14px;
-    color: #333;
-    margin: 5px 0 10px 25px; /* align with h2 */
-  }
   iframe{width:100%;border:0;border-radius:8px;display:block;}
-  footer{margin:32px 0 0;color:#666;text-align:center;font-size:14px}
-
-  /* Responsive: collapse sidebars on narrower screens */
-  @media (max-width: 1300px){
-    :root{ --sidebar-w: 280px; } /* still fits 160x600 and 300x250 comfortably */
-  }
-  @media (max-width: 1120px){
-    .shell{
-      grid-template-columns: minmax(0, var(--main-w));
-      max-width: calc(var(--main-w) + 40px);
-    }
-    .aside{ display:none; }
+  .note {
+    font-size: 14px;        /* same as info box */
+    color: #333;            /* readable, but not too bold */
+    margin: 5px 0 10px 25px;/* align with h2 (margin-left matches h2 shift) */
   }
 </style>
 </head>
 <body>
-<div class="shell">
+<div class="container">
+  <h1>Protein Source Visualizer</h1>
 
-  <!-- Left ads -->
-  <aside class="aside">
-    <div class="ad-stack">
-      <div class="ad-card ad-300x250">
-        <div>
-          <div style="font-weight:600;margin-bottom:6px;">Advertisement</div>
-          <div>300×250 Placeholder<br>(Paste AdSense code here)</div>
-        </div>
-      </div>
-      <div class="ad-card ad-300x600">
-        <div>
-          <div style="font-weight:600;margin-bottom:6px;">Advertisement</div>
-          <div>300×600 Placeholder</div>
-        </div>
-      </div>
-      <div class="ad-card ad-160x600">
-        <div>
-          <div style="font-weight:600;margin-bottom:6px;">Advertisement</div>
-          <div>160×600 Placeholder</div>
-        </div>
-      </div>
-    </div>
-  </aside>
+  <div class="card">
+    <h2>Amount vs Cost vs Calories (per 10g protein)</h2>
+    <p class="note">This graph shows the relationship between calories, cost, and food amount of various protein sources.<br></p>
+    <iframe src="3d_plot.html" height="900" scrolling="no"></iframe>
+    <p class="note"><i>(Scroll to zoom; Drag to orbit; Ctrl+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
+  </div>
 
-  <!-- Main content -->
-  <main class="container">
-    <h1>Protein Source Visualizer</h1>
+  <div class="card">
+    <h2>Calories vs Cost (per 10g protein)</h2>
+    <p class="note">Comparing calories and cost for various protein sources, disregarding the amount of food required to total 10g protein.
+    <br><br></p>
+    <iframe src="2d_plot1.html" height="625" scrolling="no"></iframe>
+    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
+  </div>
 
-    <div class="card">
-      <h2>Amount vs Cost vs Calories (per 10g protein)</h2>
-      <p class="note">This graph shows the relationship between calories, cost, and food amount of various protein sources.<br></p>
-      <iframe src="3d_plot.html" height="900" scrolling="no"></iframe>
-      <p class="note"><i>(Zoom in and out using the mouse scroll wheel. Click and drag to orbit the 3D graph. <br>Click on the category titles to filter them on/off. Double click on category title to filter all others on/off.)</i></p>
-    </div>
+  <div class="card">
+    <h2>Calories vs Amount (per 10g protein)</h2>
+    <p class="note">Comparing calories and amount for various protein sources, disregarding the cost of the amount of food required to total 10g protein.
+    <br><br></p>
+    <iframe src="2d_plot2.html" height="625" scrolling="no"></iframe>
+    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
+  </div>
 
-    <div class="card">
-      <h2>Calories vs Cost (per 10g protein)</h2>
-      <p class="note">Comparing calories and cost for various protein sources, disregarding the amount of food required to total 10g protein.
-      <br><br></p>
-      <iframe src="2d_plot1.html" height="625" scrolling="no"></iframe>
-      <p class="note"><i>(Zoom in and out using the mouse scroll wheel. Hold shift and click and drag to pan the 2D graph. <br>Click on the category titles to filter them on/off. Double click on category title to filter all others on/off.)</i></p>
-    </div>
+  <div class="card">
+    <h2>Cost vs Amount (per 10g protein)</h2>
+    <p class="note">Comparing cost and amount for various protein sources, disregarding the calorie total for the amount of food required to total 10g protein.
+    <br><br></p>
+    <iframe src="2d_plot3.html" height="625" scrolling="no"></iframe>
+    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
+  </div>
 
-    <div class="card">
-      <h2>Calories vs Amount (per 10g protein)</h2>
-      <p class="note">Comparing calories and amount for various protein sources, disregarding the cost of the amount of food required to total 10g protein.
-      <br><br></p>
-      <iframe src="2d_plot2.html" height="625" scrolling="no"></iframe>
-      <p class="note"><i>(Zoom in and out using the mouse scroll wheel. Hold shift and click and drag to pan the 2D graph. <br>Click on the category titles to filter them on/off. Double click on category title to filter all others on/off.)</i></p>
-    </div>
+  <div class="card">
+    <h2>Food Sources</h2>
+    <p class="note">Current database of food source information. Values represent quantities per 10g protein.<br><br></p>
+    <iframe src="data_table.html" height="600" scrolling="auto"></iframe>
+    <p class="note"><br><i>(Click column headers to sort.)</i></p>
+  </div>
 
-    <div class="card">
-      <h2>Cost vs Amount (per 10g protein)</h2>
-      <p class="note">Comparing cost and amount for various protein sources, disregarding the calorie total for the amount of food required to total 10g protein.
-      <br><br></p>
-      <iframe src="2d_plot3.html" height="625" scrolling="no"></iframe>
-      <p class="note"><i>(Zoom in and out using the mouse scroll wheel. Hold shift and click and drag to pan the 2D graph. <br>Click on the category titles to filter them on/off. Double click on category title to filter all others on/off.)</i></p>
-    </div>
-
-    <div class="card">
-      <h2>Food Sources</h2>
-      <p class="note">Current database of food source information. Values represent quantities per 10g protein.<br><br></p>
-      <iframe src="data_table.html" height="600" scrolling="auto"></iframe>
-      <p class="note"><br><i>(Click on each header to sort by column.)</i></p>
-    </div>
-
-    <footer><p>&copy; <span id="year"></span> Protein Visualizer</p></footer>
-  </main>
-
-  <!-- Right ads -->
-  <aside class="aside">
-    <div class="ad-stack">
-      <div class="ad-card ad-300x250">
-        <div>
-          <div style="font-weight:600;margin-bottom:6px;">Advertisement</div>
-          <div>300×250 Placeholder<br>(Paste AdSense code here)</div>
-        </div>
-      </div>
-      <div class="ad-card ad-300x600">
-        <div>
-          <div style="font-weight:600;margin-bottom:6px;">Advertisement</div>
-          <div>300×600 Placeholder</div>
-        </div>
-      </div>
-      <div class="ad-card ad-160x600">
-        <div>
-          <div style="font-weight:600;margin-bottom:6px;">Advertisement</div>
-          <div>160×600 Placeholder</div>
-        </div>
-      </div>
-    </div>
-  </aside>
-
+  <footer><p>&copy; <span id="year"></span> Protein Visualizer</p></footer>
 </div>
 <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
-
-<!-- After AdSense approval, un-comment and insert your client ID:
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX" crossorigin="anonymous"></script>
--->
 </body>
 </html>
 """.strip()
-
-
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(index_html)

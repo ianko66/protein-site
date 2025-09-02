@@ -42,14 +42,14 @@ fixed_colors = {
     "Plant Protein": "#228B22",
     "Supplement Protein": "#1E90FF",
     "Dairy": "#9370DB",
-    "Poultry": "#FFA500",
-    "Fish & Seafood": "#1E90FF",
-    "Red Meat & Game": "#B22222",
-    "Eggs": "#8B4513",
-    "Legumes": "#2E8B57",
-    "Soy": "#20B2AA",
-    "Nuts & Seeds": "#A0522D",
-    "Supplements": "#4B0082",
+    "Poultry": "#FF7F0E",
+    "Fish & Seafood": "#1F77B4",
+    "Red Meat & Game": "#8C564B",
+    "Eggs": "#9467BD",
+    "Legumes": "#2CA02C",
+    "Soy": "#17BECF",
+    "Nuts & Seeds": "#BCBD22",
+    "Supplements": "#1E90FF",
 }
 fallback_palette = [
     "#1F77B4", "#FF7F0E", "#2CA02C", "#D62728", "#9467BD",
@@ -88,7 +88,7 @@ for cat in categories:
         hovertemplate="<b>%{text}</b><br>"
                       "<b>Calories (per 10g protein):</b> %{x:.2f}<br>"
                       "<b>Cost (per 10g protein):</b> $%{y:.2f}<br>"
-                      "<b>Amount, in grams (per 10g protein):</b> %{z:.2f}<br>"
+                      "<b>Weight, in grams (per 10g protein):</b> %{z:.2f}<br>"
                       "<extra></extra>",
         name=cat, legendgroup=cat
     ))
@@ -100,7 +100,7 @@ fig3d.update_layout(
     scene=dict(
         xaxis=dict(title="Calories (per 10g protein)", range=[0, x_max], ticks="outside"),
         yaxis=dict(title="Cost (per 10g protein)",     range=[0, y_max], tickprefix="$", tickformat=".2f", ticks="outside"),
-        zaxis=dict(title="Amount, in grams (per 10g protein)", range=[0, z_max], ticks="outside"),
+        zaxis=dict(title="Weight, in grams (per 10g protein)", range=[0, z_max], ticks="outside"),
         camera=dict(eye=base_eye),
         aspectmode="cube"
     ),
@@ -160,14 +160,29 @@ def write_custom_3d_html(fig, filename: str, base_eye_val: dict):
   function fmtMoney(n){{ return '$' + Number(n).toFixed(2); }}
   function fmtNum(n){{ return Number(n).toFixed(2); }}
 
-  // Reset via button
+  // Reset via button (also re-enable all categories)
   document.getElementById('resetBtn').addEventListener('click', function(){{
+    // Reset camera
     Plotly.relayout('plot3d', {{'scene.camera.eye': BASE_EYE}});
+
+    // Turn ALL categories back on
+    const traceIdxs = (plotDiv.data || [])
+      .map((tr, i) => (tr && tr.type === 'scatter3d' ? i : null))
+      .filter(i => i !== null);
+    if (traceIdxs.length) {{
+      Plotly.restyle('plot3d', {{ visible: true }}, traceIdxs);
+    }}
   }});
 
-  // Reset via double-click
+  // Reset via double-click (camera + categories)
   plotDiv.on('plotly_doubleclick', function() {{
     Plotly.relayout('plot3d', {{'scene.camera.eye': BASE_EYE}});
+    const traceIdxs = (plotDiv.data || [])
+      .map((tr, i) => (tr && tr.type === 'scatter3d' ? i : null))
+      .filter(i => i !== null);
+    if (traceIdxs.length) {{
+      Plotly.restyle('plot3d', {{ visible: true }}, traceIdxs);
+    }}
   }});
 
   // Hover info
@@ -181,7 +196,7 @@ def write_custom_3d_html(fig, filename: str, base_eye_val: dict):
       '<div class="kv">' +
         '<div class="k">Calories (per 10g protein):</div><div>' + fmtNum(cal) + '</div>' +
         '<div class="k">Cost (per 10g protein):</div><div>' + fmtMoney(cost) + '</div>' +
-        '<div class="k">Amount, in grams (per 10g protein):</div><div>' + fmtNum(grams) + '</div>' +
+        '<div class="k">Weight, in grams (per 10g protein):</div><div>' + fmtNum(grams) + '</div>' +
       '</div>';
   }});
 </script>
@@ -191,20 +206,15 @@ def write_custom_3d_html(fig, filename: str, base_eye_val: dict):
         f.write(html)
 
 # =========================================================
-# 2D PAGES (dynamic hover labels per chart + clamp zoom & pan + reset button)
+# 2D PAGES (dynamic hover labels per chart + clamp zoom & pan + reset button to the right of info box)
 # =========================================================
 def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
                          x_range=None, y_range=None,
                          money_x: bool=False, money_y: bool=False):
     """Render a single 2D chart page with correct, dynamic hover labels, axis clamping, and Reset View button inline with info box (button on right)."""
     plot_height = 490  # chart area height inside the card/iframe
-    fig.update_layout(
-        height=plot_height,
-        width=800,
-        showlegend=True,
-        legend=dict(title="Category"),
-        margin=dict(t=5, l=50, r=0, b=50)
-    )
+    fig.update_layout(height=plot_height, width=800, showlegend=True, legend=dict(title="Category"),
+                      margin=dict(t=5, l=50, r=0, b=50))
 
     if x_range is not None:
         fig.update_xaxes(range=x_range, autorange=False)
@@ -278,12 +288,20 @@ def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
   function fmtMoney(n){{ return '$' + Number(n).toFixed(2); }}
   function fmtNum(n){{ return Number(n).toFixed(2); }}
 
-  // Reset View button restores initial ranges
+  // Reset View button: restore ranges AND re-enable all categories
   document.getElementById('resetBtn').addEventListener('click', function(){{
     const relayout = {{}};
     if (INIT_X_RANGE) relayout['xaxis.range'] = INIT_X_RANGE;
     if (INIT_Y_RANGE) relayout['yaxis.range'] = INIT_Y_RANGE;
     Plotly.relayout('plot2d', relayout);
+
+    // Turn ALL categories back on
+    const traceIdxs = (plotDiv.data || [])
+      .map((tr, i) => (tr && tr.type === 'scatter' ? i : null))
+      .filter(i => i !== null);
+    if (traceIdxs.length) {{
+      Plotly.restyle('plot2d', {{ visible: true }}, traceIdxs);
+    }}
   }});
 
   // Clamp ranges so the lower bound never goes below 0 (handles zoom AND pan).
@@ -415,11 +433,11 @@ make_2d("Calories_for_10g_protein","Cost_for_10g_protein",
         "2d_plot1.html", xlim=[0, x_max], ylim=[0, 1])
 
 make_2d("Calories_for_10g_protein","Grams_for_10g_protein",
-        "Calories (per 10g protein)","Amount, in grams (per 10g protein)",
+        "Calories (per 10g protein)","Weight, in grams (per 10g protein)",
         "2d_plot2.html", xlim=[0, x_max], ylim=[0, z_max])
 
 make_2d("Cost_for_10g_protein","Grams_for_10g_protein",
-        "Cost (per 10g protein)","Amount, in grams (per 10g protein)",
+        "Cost (per 10g protein)","Weight, in grams (per 10g protein)",
         "2d_plot3.html", xlim=[0, 1], ylim=[0, z_max])
 
 # ---------- Write 3D page ----------
@@ -430,7 +448,7 @@ def write_data_table_html(df: pd.DataFrame, filename: str = "data_table.html"):
     """Write a styled, sortable HTML table of the normalized per-10g protein data, with clean headers."""
     # Columns to include (normalized to per 10g protein)
     cols = ["Food", "Category", "Calories_for_10g_protein", "Cost_for_10g_protein", "Grams_for_10g_protein"]
-    cols = [c for c in cols if c in df.columns]  # safety in case of custom CSVs
+    cols = [c for c in cols if c in df.columns]
     view = df[cols].copy()
 
     # Rename for display only
@@ -596,4 +614,4 @@ index_html = """<!doctype html>
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(index_html)
 
-print("✅ Site built: 3D + 2D charts and a sortable Input Data table card at the bottom.")
+print("✅ Site built: 3D + 2D charts and a sortable Input Data table card at the bottom. Reset buttons now also re-enable ALL categories.")
