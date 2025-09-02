@@ -552,7 +552,7 @@ index_html = """<!doctype html>
     <h2>Amount vs Cost vs Calories (per 10g protein)</h2>
     <p class="note">This graph shows the relationship between calories, cost, and food amount of various protein sources.<br></p>
     <iframe src="3d_plot.html" height="900" scrolling="no"></iframe>
-    <p class="note"><i>(Zoom in and out using the mouse scroll wheel. Click and drag to orbit the 3D graph. <br>Click on the category titles to filter them on/off. Double click on category title to filter all others on/off.)</i></p>
+    <p class="note"><i>(Scroll to zoom; Drag to orbit; Ctrl+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
   </div>
 
   <div class="card">
@@ -560,7 +560,7 @@ index_html = """<!doctype html>
     <p class="note">Comparing calories and cost for various protein sources, disregarding the amount of food required to total 10g protein.
     <br><br></p>
     <iframe src="2d_plot1.html" height="625" scrolling="no"></iframe>
-    <p class="note"><i>(Zoom in and out using the mouse scroll wheel. Hold shift and click and drag to pan the 2D graph. <br>Click on the category titles to filter them on/off. Double click on category title to filter all others on/off.)</i></p>
+    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
   </div>
 
   <div class="card">
@@ -568,7 +568,7 @@ index_html = """<!doctype html>
     <p class="note">Comparing calories and amount for various protein sources, disregarding the cost of the amount of food required to total 10g protein.
     <br><br></p>
     <iframe src="2d_plot2.html" height="625" scrolling="no"></iframe>
-    <p class="note"><i>(Zoom in and out using the mouse scroll wheel. Hold shift and click and drag to pan the 2D graph. <br>Click on the category titles to filter them on/off. Double click on category title to filter all others on/off.)</i></p>
+    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
   </div>
 
   <div class="card">
@@ -576,14 +576,14 @@ index_html = """<!doctype html>
     <p class="note">Comparing cost and amount for various protein sources, disregarding the calorie total for the amount of food required to total 10g protein.
     <br><br></p>
     <iframe src="2d_plot3.html" height="625" scrolling="no"></iframe>
-    <p class="note"><i>(Zoom in and out using the mouse scroll wheel. Hold shift and click and drag to pan the 2D graph. <br>Click on the category titles to filter them on/off. Double click on category title to filter all others on/off.)</i></p>
+    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
   </div>
 
   <div class="card">
     <h2>Food Sources</h2>
     <p class="note">Current database of food source information. Values represent quantities per 10g protein.<br><br></p>
     <iframe src="data_table.html" height="600" scrolling="auto"></iframe>
-    <p class="note"><br><i>(Click on each header to sort by column.)</i></p>
+    <p class="note"><br><i>(Click column headers to sort.)</i></p>
   </div>
 
   <footer><p>&copy; <span id="year"></span> Protein Visualizer</p></footer>
