@@ -4,11 +4,25 @@
 <meta charset="utf-8">
 <title>Protein Visualizer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- JSON-LD: WebSite + SearchAction -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Protein Visualizer",
+  "url": "https://example.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://example.com/data_table.html?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
 <style>
   body{font-family:sans-serif;background:#fafafa;margin:0;}
   .container{max-width:900px;margin:auto;padding:20px;}
   .card{margin:20px 0;padding:10px;background:#fff;border:1px solid #ddd;border-radius:8px;}
-  .card h2{margin-left:25px;} /* shift headers 25px to the right */
+  .card h2{margin-left:25px;}
   .note{font-size:14px;color:#333;margin:5px 0 10px 25px;}
   .links{margin:8px 0 0 25px;font-size:14px;color:#555;}
   .links a{color:#0a58ca;text-decoration:none}
@@ -36,7 +50,7 @@
   <!-- 2D: Calories vs Cost -->
   <div class="card">
     <h2>Calories vs Cost (per 10g protein)</h2>
-    <p class="note">Comparing calories and cost for various protein sources, disregarding the weight of the amount of food required to total 10g protein.</p>
+    <p class="note">Comparing calories and cost for various protein sources, disregarding the weight required for 10g protein.</p>
     <iframe src="2d_plot1.html" height="625" scrolling="no" title="Calories vs Cost"></iframe>
     <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
     <p class="links">
@@ -48,7 +62,7 @@
   <!-- 2D: Calories vs Weight -->
   <div class="card">
     <h2>Calories vs Weight (per 10g protein)</h2>
-    <p class="note">Comparing calories and weight for various protein sources, disregarding the cost for the amount of food required to total 10g protein.</p>
+    <p class="note">Comparing calories and weight for various protein sources, disregarding the cost of 10g protein.</p>
     <iframe src="2d_plot2.html" height="625" scrolling="no" title="Calories vs Weight"></iframe>
     <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
     <p class="links">
@@ -60,12 +74,22 @@
   <!-- 2D: Cost vs Weight -->
   <div class="card">
     <h2>Cost vs Weight (per 10g protein)</h2>
-    <p class="note">Comparing cost and weight for various protein sources, disregarding the calorie total for the amount of food required to total 10g protein.</p>
+    <p class="note">Comparing cost and weight for various protein sources, disregarding calories for 10g protein.</p>
     <iframe src="2d_plot3.html" height="625" scrolling="no" title="Cost vs Weight"></iframe>
     <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
     <p class="links">
       <a href="2d_plot3.html" target="_blank" rel="noopener">Open this chart in a new tab</a>
       · <a href="data/foods.csv" download>Download data (CSV)</a>
+    </p>
+  </div>
+
+  <!-- Explainers -->
+  <div class="card">
+    <h2>Guides & Explainers</h2>
+    <p class="note">Short guides that summarize the data and link into the interactive charts.</p>
+    <p class="links" style="margin-left:25px">
+      <a href="best-cost-proteins.html">Best Cost-Efficient Proteins (per 10g protein)</a> ·
+      <a href="low-calorie-proteins.html">Low-Calorie Protein Picks (per 10g protein)</a>
     </p>
   </div>
 
