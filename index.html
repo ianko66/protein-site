@@ -2,68 +2,83 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Protein Source Visualizer — Compare Cost, Calories & Weight per 10g Protein</title>
-<meta name="description" content="Interactive charts comparing protein sources by cost, calories, and food weight per 10g protein. Toggle categories, zoom/pan, and view a sortable data table.">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Protein Source Visualizer">
-<meta property="og:description" content="Interactive charts comparing protein sources by cost, calories, and weight per 10g protein.">
-<meta property="og:url" content="https://example.com">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Protein Source Visualizer">
-<meta name="twitter:description" content="Interactive charts comparing protein sources by cost, calories, and weight per 10g protein.">
+<title>Protein Visualizer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   body{font-family:sans-serif;background:#fafafa;margin:0;}
   .container{max-width:900px;margin:auto;padding:20px;}
   .card{margin:20px 0;padding:10px;background:#fff;border:1px solid #ddd;border-radius:8px;}
   .card h2{margin-left:25px;} /* shift headers 25px to the right */
+  .note{font-size:14px;color:#333;margin:5px 0 10px 25px;}
+  .links{margin:8px 0 0 25px;font-size:14px;color:#555;}
+  .links a{color:#0a58ca;text-decoration:none}
+  .links a:hover{text-decoration:underline}
   iframe{width:100%;border:0;border-radius:8px;display:block;}
-  .note {
-    font-size: 14px;        /* same as info box */
-    color: #333;            /* readable, but not too bold */
-    margin: 5px 0 10px 25px;/* align with h2 (margin-left matches h2 shift) */
-  }
-  footer p{color:#666}
+  footer{margin-top:24px;color:#666}
 </style>
-<link rel="canonical" href="https://example.com/">
 </head>
 <body>
 <div class="container">
   <h1>Protein Source Visualizer</h1>
 
+  <!-- 3D -->
   <div class="card">
     <h2>Calories vs Cost vs Weight (per 10g protein)</h2>
     <p class="note">This graph shows the relationship between calories, cost, and food weight of various protein sources.</p>
-    <iframe src="3d_plot.html" height="900" scrolling="no"></iframe>
-    <p class="note"><i>(Scroll to zoom; Drag to orbit; Ctrl+drag to pan; Click legend items to filter; Double-click legend items to isolate. “Reset view” restores camera and re-enables all categories.)</i></p>
+    <iframe src="3d_plot.html" height="900" scrolling="no" title="3D Chart"></iframe>
+    <p class="note"><i>(Scroll to zoom; Drag to orbit; Ctrl+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
+    <p class="links">
+      <a href="3d_plot.html" target="_blank" rel="noopener">Open this chart in a new tab</a>
+      · <a href="data/foods.csv" download>Download data (CSV)</a>
+    </p>
   </div>
 
+  <!-- 2D: Calories vs Cost -->
   <div class="card">
     <h2>Calories vs Cost (per 10g protein)</h2>
-    <p class="note">Comparing calories and cost for various protein sources, disregarding the weight of food required to total 10g protein.</p>
-    <iframe src="2d_plot1.html" height="625" scrolling="no"></iframe>
-    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate. “Reset view” restores ranges and re-enables all categories.)</i></p>
+    <p class="note">Comparing calories and cost for various protein sources, disregarding the weight of the amount of food required to total 10g protein.</p>
+    <iframe src="2d_plot1.html" height="625" scrolling="no" title="Calories vs Cost"></iframe>
+    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
+    <p class="links">
+      <a href="2d_plot1.html" target="_blank" rel="noopener">Open this chart in a new tab</a>
+      · <a href="data/foods.csv" download>Download data (CSV)</a>
+    </p>
   </div>
 
+  <!-- 2D: Calories vs Weight -->
   <div class="card">
     <h2>Calories vs Weight (per 10g protein)</h2>
-    <p class="note">Comparing calories and weight for various protein sources, disregarding the cost of the amount of food required to total 10g protein.</p>
-    <iframe src="2d_plot2.html" height="625" scrolling="no"></iframe>
+    <p class="note">Comparing calories and weight for various protein sources, disregarding the cost for the amount of food required to total 10g protein.</p>
+    <iframe src="2d_plot2.html" height="625" scrolling="no" title="Calories vs Weight"></iframe>
     <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
+    <p class="links">
+      <a href="2d_plot2.html" target="_blank" rel="noopener">Open this chart in a new tab</a>
+      · <a href="data/foods.csv" download>Download data (CSV)</a>
+    </p>
   </div>
 
+  <!-- 2D: Cost vs Weight -->
   <div class="card">
     <h2>Cost vs Weight (per 10g protein)</h2>
     <p class="note">Comparing cost and weight for various protein sources, disregarding the calorie total for the amount of food required to total 10g protein.</p>
-    <iframe src="2d_plot3.html" height="625" scrolling="no"></iframe>
+    <iframe src="2d_plot3.html" height="625" scrolling="no" title="Cost vs Weight"></iframe>
     <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
+    <p class="links">
+      <a href="2d_plot3.html" target="_blank" rel="noopener">Open this chart in a new tab</a>
+      · <a href="data/foods.csv" download>Download data (CSV)</a>
+    </p>
   </div>
 
+  <!-- Data table -->
   <div class="card">
     <h2>Food Sources</h2>
     <p class="note">Current database of food source information. Values represent quantities per 10g protein.</p>
-    <iframe src="data_table.html" height="600" scrolling="auto"></iframe>
+    <iframe src="data_table.html" height="600" scrolling="auto" title="Food Sources Table"></iframe>
     <p class="note"><i><br>(Click column headers to sort.)</i></p>
+    <p class="links">
+      <a href="data_table.html" target="_blank" rel="noopener">Open this table in a new tab</a>
+      · <a href="data/foods.csv" download>Download data (CSV)</a>
+    </p>
   </div>
 
   <footer><p>&copy; <span id="year"></span> Protein Visualizer</p></footer>
