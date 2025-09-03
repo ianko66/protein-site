@@ -168,7 +168,6 @@ def write_custom_3d_html(fig, filename: str, base_eye_val: dict):
       <div class="infobox" id="selBox">Hover over a point to see values.</div>
       <div class="reset"><button id="resetBtn">Reset view</button></div>
     </div>
-    <div class="back"><a href="/">← Back to homepage</a></div>
   </div>
 <script>
   const selBox = document.getElementById('selBox');
@@ -291,7 +290,6 @@ def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
       <div class="infobox" id="selBox">Hover over a point to see values.</div>
       <div class="reset"><button id="resetBtn">Reset view</button></div>
     </div>
-    <div class="back"><a href="/">← Back to homepage</a></div>
   </div>
 <script>
   const selBox = document.getElementById('selBox');
@@ -515,7 +513,6 @@ def write_data_table_html(df: pd.DataFrame, filename: str = "data_table.html"):
     <div class="wrap">
       {table_html}
     </div>
-    <div class="back"><a href="/">← Back to homepage</a></div>
   </div>
 <script>
 // Simple column sorting (numeric-aware; handles $)
