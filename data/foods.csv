@@ -1,29 +1,49 @@
 Food,Calories_per_gram,Protein_per_gram,Cost_per_gram,Category
-Chicken breast,1.65,0.31,0.005,Animal Protein
-Turkey breast,1.35,0.29,0.006,Animal Protein
-Egg whites,0.52,0.11,0.003,Animal Protein
-Cod,0.82,0.18,0.010,Animal Protein
-Tilapia,0.96,0.21,0.009,Animal Protein
-Shrimp,0.99,0.24,0.014,Animal Protein
-Canned tuna (water),1.00,0.23,0.009,Animal Protein
-Lean pork loin,1.50,0.26,0.011,Animal Protein
-Ground turkey 93% lean,1.15,0.27,0.008,Animal Protein
-Salmon,2.08,0.20,0.012,Animal Protein
-Lentils (cooked),1.16,0.09,0.004,Plant Protein
-Chickpeas (cooked),1.64,0.08,0.004,Plant Protein
-Black beans (cooked),1.34,0.09,0.003,Plant Protein
-Edamame,1.30,0.11,0.008,Plant Protein
-Tofu (firm),0.76,0.08,0.003,Plant Protein
-Tempeh,1.90,0.19,0.008,Plant Protein
-Seitan,1.20,0.21,0.008,Plant Protein
-Peas (cooked),0.84,0.06,0.005,Plant Protein
-Whey protein isolate,3.90,0.80,0.030,Supplement Protein
-Casein protein,3.60,0.90,0.035,Supplement Protein
-Soy protein powder,3.80,0.85,0.022,Supplement Protein
-Pea protein powder,3.80,0.80,0.020,Supplement Protein
+Chicken breast,1.65,0.31,0.005,Poultry
+Turkey breast,1.35,0.29,0.006,Poultry
+Ground turkey 93% lean,1.15,0.27,0.008,Poultry
+Duck breast,2.00,0.19,0.014,Poultry
+Egg whites,0.52,0.11,0.003,Eggs
+Whole eggs,1.55,0.125,0.0025,Eggs
+Cod,0.82,0.18,0.010,Fish & Seafood
+Tilapia,0.96,0.21,0.009,Fish & Seafood
+Salmon,2.08,0.20,0.012,Fish & Seafood
+Shrimp,0.99,0.24,0.014,Fish & Seafood
+Canned tuna (water),1.00,0.23,0.009,Fish & Seafood
+Beef sirloin,2.50,0.26,0.012,Red Meat & Game
+Lean pork loin,1.50,0.26,0.011,Red Meat & Game
+Venison,1.58,0.26,0.013,Red Meat & Game
 Greek yogurt (non-fat),0.59,0.10,0.008,Dairy
 Cottage cheese (low-fat),0.98,0.11,0.006,Dairy
 Skim milk,0.34,0.034,0.002,Dairy
-Quinoa (cooked),1.20,0.04,0.008,Grains
+Whole milk,0.64,0.033,0.0025,Dairy
+2% milk,0.50,0.033,0.0011,Dairy
+Hard cheese (cheddar),4.02,0.25,0.015,Dairy
+Lentils (cooked),1.16,0.09,0.004,Legumes
+Chickpeas (cooked),1.64,0.08,0.004,Legumes
+Black beans (cooked),1.34,0.09,0.003,Legumes
+Peas (cooked),0.84,0.06,0.005,Legumes
+Split peas (cooked),1.16,0.086,0.0035,Legumes
+Edamame,1.30,0.11,0.008,Soy
+Tofu (firm),0.76,0.08,0.003,Soy
+Tempeh,1.90,0.19,0.008,Soy
+Soybeans (cooked),1.73,0.17,0.0055,Soy
+Hemp seeds,5.67,0.31,0.025,Nuts & Seeds
+Pumpkin seeds,5.60,0.30,0.018,Nuts & Seeds
+Chia seeds,4.86,0.17,0.020,Nuts & Seeds
+Sunflower seeds,5.84,0.21,0.017,Nuts & Seeds
+Almonds,5.76,0.21,0.020,Nuts & Seeds
+Peanut butter,5.88,0.25,0.010,Nuts & Seeds
 Oats (dry),3.90,0.17,0.002,Grains
+Quinoa (cooked),1.20,0.04,0.008,Grains
+Seitan,1.20,0.21,0.008,Grains
+Casein protein,3.60,0.90,0.035,Supplements
+Soy protein powder,3.80,0.85,0.022,Supplements
+Pea protein powder,3.80,0.80,0.020,Supplements
+Egg white protein powder,3.80,0.80,0.025,Supplements
+Collagen peptides,3.60,0.90,0.030,Supplements
 Spinach (raw),0.23,0.029,0.005,Vegetables
+Mushrooms (raw),0.22,0.031,0.006,Vegetables
+Organic plant-based protein,3.26,0.43,0.042,Supplements
+Whey protein,3.95,0.79,0.035,Supplements
+Whey protein isolate,3.55,0.81,0.040,Supplements

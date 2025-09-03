@@ -3,10 +3,6 @@ import json
 import pandas as pd
 import plotly.graph_objects as go
 
-# ---------- Site constants for SEO (safe defaults; tweak if you have your URL) ----------
-SITE_NAME = os.environ.get("SITE_NAME", "Protein Visualizer")
-SITE_URL  = os.environ.get("SITE_URL",  "https://example.com")  # set to your real domain later
-
 # ---------- Paths ----------
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
 DATA_PATH = os.path.join(DATA_DIR, "foods.csv")
@@ -46,8 +42,6 @@ fixed_colors = {
     "Plant Protein": "#228B22",
     "Supplement Protein": "#1E90FF",
     "Dairy": "#9370DB",
-
-    # Expanded categories you added
     "Poultry": "#FF7F0E",
     "Fish & Seafood": "#1F77B4",
     "Red Meat & Game": "#8C564B",
@@ -102,7 +96,7 @@ for cat in categories:
 base_eye = dict(x=1.6, y=1.6, z=1.2)
 
 fig3d.update_layout(
-    # no visible title (cards on index provide titles)
+    # title intentionally omitted
     scene=dict(
         xaxis=dict(title="Calories (per 10g protein)", range=[0, x_max], ticks="outside"),
         yaxis=dict(title="Cost (per 10g protein)",     range=[0, y_max], tickprefix="$", tickformat=".2f", ticks="outside"),
@@ -121,34 +115,17 @@ fig3d.update_layout(
     margin=dict(r=0, t=5, l=25, b=50)
 )
 
-# =========================================================
-# Chart page writers (NO visible H1/intro inside iframes to avoid duplication)
-# =========================================================
 def write_custom_3d_html(fig, filename: str, base_eye_val: dict):
-    """3D page for iframing: no visible H1/intro; has SEO head, hover box, and Reset that re-enables categories."""
-    page_title = "3D — Calories vs Cost vs Weight (per 10g protein)"
-    page_desc  = "Interactive 3D chart comparing weight (grams), cost, and calories per 10g protein across many foods and categories."
-
     fig.update_layout(height=740, width=850, showlegend=True)
     inner = fig.to_html(include_plotlyjs=False, full_html=False, div_id="plot3d",
                         config={"scrollZoom": True, "displaylogo": False})
     BASE_EYE_JSON = json.dumps(base_eye_val)
 
     html = f"""<!doctype html>
-<html lang="en">
+<html>
 <head>
 <meta charset="utf-8">
-<title>{page_title} — {SITE_NAME}</title>
-<link rel="canonical" href="{SITE_URL}/3d_plot.html">
-<meta name="description" content="{page_desc}">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta property="og:title" content="{page_title} — {SITE_NAME}">
-<meta property="og:description" content="{page_desc}">
-<meta property="og:url" content="{SITE_URL}/3d_plot.html">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{page_title} — {SITE_NAME}">
-<meta name="twitter:description" content="{page_desc}">
+<title>3D Protein Visualizer</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <style>
   html,body{{margin:0;padding:0;background:#fff;font-family:system-ui,Segoe UI,Roboto,Arial;}}
@@ -164,14 +141,12 @@ def write_custom_3d_html(fig, filename: str, base_eye_val: dict):
            width:520px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
   .kv{{display:grid;grid-template-columns:300px 1fr;gap:6px 10px;margin-top:6px;}}
   .k{{color:#666;}}
-  noscript p{{font-size:14px;color:#444}}
 </style>
 </head>
 <body>
   <div class="page">
     <div class="plot-wrapper">
       {inner}
-      <noscript><p>JavaScript is required to view this interactive chart. See the <a href="/data_table.html">data table</a>.</p></noscript>
       <div class="info-row">
         <div class="infobox" id="selBox">Hover over a point to see values.</div>
         <div class="reset"><button id="resetBtn">Reset view</button></div>
@@ -185,9 +160,12 @@ def write_custom_3d_html(fig, filename: str, base_eye_val: dict):
   function fmtMoney(n){{ return '$' + Number(n).toFixed(2); }}
   function fmtNum(n){{ return Number(n).toFixed(2); }}
 
-  // Reset via button (camera + categories)
+  // Reset via button (also re-enable all categories)
   document.getElementById('resetBtn').addEventListener('click', function(){{
+    // Reset camera
     Plotly.relayout('plot3d', {{'scene.camera.eye': BASE_EYE}});
+
+    // Turn ALL categories back on
     const traceIdxs = (plotDiv.data || [])
       .map((tr, i) => (tr && tr.type === 'scatter3d' ? i : null))
       .filter(i => i !== null);
@@ -227,25 +205,14 @@ def write_custom_3d_html(fig, filename: str, base_eye_val: dict):
     with open(filename, "w", encoding="utf-8") as f:
         f.write(html)
 
-
+# =========================================================
+# 2D PAGES (dynamic hover labels per chart + clamp zoom & pan + reset button to the right of info box)
+# =========================================================
 def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
                          x_range=None, y_range=None,
                          money_x: bool=False, money_y: bool=False):
-    """
-    2D page for iframing: no visible H1/intro (to avoid duplication in index card),
-    with SEO head, clamped axes, and Reset (also re-enables all categories).
-    """
-    title_map = {
-        "2d_plot1.html": ("2D — Calories vs Cost (per 10g protein)",
-                          "Interactive chart comparing calories vs cost per 10g protein across many foods and categories."),
-        "2d_plot2.html": ("2D — Calories vs Weight (per 10g protein)",
-                          "Interactive chart comparing calories per 10g protein vs grams required for 10g protein across many foods."),
-        "2d_plot3.html": ("2D — Cost vs Weight (per 10g protein)",
-                          "Interactive chart comparing cost per 10g protein vs grams required for 10g protein across many foods.")
-    }
-    page_title, page_desc = title_map.get(filename, (f"2D — {xlabel} vs {ylabel}", f"Interactive chart of {xlabel} vs {ylabel}."))
-
-    plot_height = 490
+    """Render a single 2D chart page with correct, dynamic hover labels, axis clamping, and Reset View button inline with info box (button on right)."""
+    plot_height = 490  # chart area height inside the card/iframe
     fig.update_layout(height=plot_height, width=800, showlegend=True, legend=dict(title="Category"),
                       margin=dict(t=5, l=50, r=0, b=50))
 
@@ -254,6 +221,7 @@ def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
     if y_range is not None:
         fig.update_yaxes(range=y_range, autorange=False)
 
+    # Hovertemplate: keep %{x:.2f} intact
     x_fmt = "$%{x:.2f}" if money_x else "%{x:.2f}"
     y_fmt = "$%{y:.2f}" if money_y else "%{y:.2f}"
     hovertemplate = (
@@ -267,6 +235,7 @@ def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
     inner = fig.to_html(include_plotlyjs=False, full_html=False, div_id="plot2d",
                         config={"scrollZoom": True, "displaylogo": False})
 
+    # Pass labels, money flags, and initial ranges to JS (for clamping and reset/info)
     X_LABEL = json.dumps(xlabel)
     Y_LABEL = json.dumps(ylabel)
     MONEY_X = str(money_x).lower()
@@ -275,20 +244,10 @@ def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
     INIT_Y_RANGE = json.dumps(y_range if y_range is not None else [0, None])
 
     html = f"""<!doctype html>
-<html lang="en">
+<html>
 <head>
 <meta charset="utf-8">
-<title>{page_title} — {SITE_NAME}</title>
-<link rel="canonical" href="{SITE_URL}/{filename}">
-<meta name="description" content="{page_desc}">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta property="og:title" content="{page_title} — {SITE_NAME}">
-<meta property="og:description" content="{page_desc}">
-<meta property="og:url" content="{SITE_URL}/{filename}">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{page_title} — {SITE_NAME}">
-<meta name="twitter:description" content="{page_desc}">
+<title>2D Protein Visualizer</title>
 <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 <style>
   html,body{{margin:0;padding:0;background:#fff;font-family:system-ui,Segoe UI,Roboto,Arial;}}
@@ -304,14 +263,12 @@ def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
            width:520px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}}
   .kv{{display:grid;grid-template-columns:300px 1fr;gap:6px 10px;margin-top:6px;}}
   .k{{color:#666;}}
-  noscript p{{font-size:14px;color:#444}}
 </style>
 </head>
 <body>
   <div class="page">
     <div class="plot-wrapper">
       {inner}
-      <noscript><p>JavaScript is required to view this interactive chart. See the <a href="/data_table.html">data table</a>.</p></noscript>
       <div class="info-row">
         <div class="infobox" id="selBox">Hover over a point to see values.</div>
         <div class="reset"><button id="resetBtn">Reset view</button></div>
@@ -331,13 +288,14 @@ def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
   function fmtMoney(n){{ return '$' + Number(n).toFixed(2); }}
   function fmtNum(n){{ return Number(n).toFixed(2); }}
 
-  // Reset View: restore ranges AND re-enable all categories
+  // Reset View button: restore ranges AND re-enable all categories
   document.getElementById('resetBtn').addEventListener('click', function(){{
     const relayout = {{}};
     if (INIT_X_RANGE) relayout['xaxis.range'] = INIT_X_RANGE;
     if (INIT_Y_RANGE) relayout['yaxis.range'] = INIT_Y_RANGE;
     Plotly.relayout('plot2d', relayout);
 
+    // Turn ALL categories back on
     const traceIdxs = (plotDiv.data || [])
       .map((tr, i) => (tr && tr.type === 'scatter' ? i : null))
       .filter(i => i !== null);
@@ -346,14 +304,16 @@ def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
     }}
   }});
 
-  // Clamp ranges so lower bound never goes below 0 (zoom AND pan)
+  // Clamp ranges so the lower bound never goes below 0 (handles zoom AND pan).
   let clampGuard = false;
   plotDiv.on('plotly_relayout', function(e){{
     if (clampGuard) return;
 
+    // Handle double-click autorange resets too
     const wantsAutoX = (e && (e['xaxis.autorange'] === true));
     const wantsAutoY = (e && (e['yaxis.autorange'] === true));
 
+    // Get current ranges from layout
     const xr = (plotDiv.layout.xaxis && plotDiv.layout.xaxis.range) ? plotDiv.layout.xaxis.range.slice() : null;
     const yr = (plotDiv.layout.yaxis && plotDiv.layout.yaxis.range) ? plotDiv.layout.yaxis.range.slice() : null;
 
@@ -363,6 +323,7 @@ def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
     let update = {{}};
     let changed = false;
 
+    // If autorange was requested, reset to [0, initMax]
     function currentMax(axisRange, layoutRange) {{
       if (axisRange && axisRange[1] != null) return axisRange[1];
       if (layoutRange && layoutRange.length === 2 && layoutRange[1] != null) return layoutRange[1];
@@ -380,6 +341,7 @@ def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
       changed = true;
     }}
 
+    // Clamp negative mins after any zoom/pan
     const xrNow = (update['xaxis.range'] ? update['xaxis.range'] : xr);
     const yrNow = (update['yaxis.range'] ? update['yaxis.range'] : yr);
 
@@ -422,9 +384,6 @@ def write_custom_2d_html(fig, filename: str, xlabel: str, ylabel: str,
     with open(filename, "w", encoding="utf-8") as f:
         f.write(html)
 
-# =========================================================
-# Make 2D plots helper
-# =========================================================
 def make_2d(x, y, xlabel, ylabel, filename, xlim=None, ylim=None):
     """Create a 2D scatter per category, with proper money flags and axis money ticks."""
     fig = go.Figure()
@@ -484,29 +443,30 @@ make_2d("Cost_for_10g_protein","Grams_for_10g_protein",
 # ---------- Write 3D page ----------
 write_custom_3d_html(fig3d, "3d_plot.html", base_eye)
 
-# =========================================================
-# Input Data Table page (sortable headers)
-# =========================================================
+# ---------- Input Data Table page (sortable headers) ----------
 def write_data_table_html(df: pd.DataFrame, filename: str = "data_table.html"):
     """Write a styled, sortable HTML table of the normalized per-10g protein data, with clean headers."""
+    # Columns to include (normalized to per 10g protein)
     cols = ["Food", "Category", "Calories_for_10g_protein", "Cost_for_10g_protein", "Grams_for_10g_protein"]
     cols = [c for c in cols if c in df.columns]
     view = df[cols].copy()
 
+    # Rename for display only
     rename_map = {
         "Calories_for_10g_protein": "Calories",
         "Cost_for_10g_protein": "Cost",
-        "Grams_for_10g_protein": "Weight (grams)"
+        "Grams_for_10g_protein": "Amount (grams)"
     }
     view = view.rename(columns={k: v for k, v in rename_map.items() if k in view.columns})
 
+    # Format values
     formatters = {}
     if "Calories" in view.columns:
         formatters["Calories"] = lambda v: f"{v:.2f}"
     if "Cost" in view.columns:
         formatters["Cost"] = lambda v: f"${v:.2f}"
-    if "Weight (grams)" in view.columns:
-        formatters["Weight (grams)"] = lambda v: f"{v:.2f}"
+    if "Amount (grams)" in view.columns:
+        formatters["Amount (grams)"] = lambda v: f"{v:.2f}"
 
     table_html = view.to_html(
         index=False,
@@ -518,20 +478,10 @@ def write_data_table_html(df: pd.DataFrame, filename: str = "data_table.html"):
     )
 
     html = f"""<!doctype html>
-<html lang="en">
+<html>
 <head>
 <meta charset="utf-8">
-<title>Input Data — {SITE_NAME}</title>
-<link rel="canonical" href="{SITE_URL}/data_table.html">
-<meta name="description" content="Sortable table of calories, cost, and weight (grams) per 10g protein for foods and supplements.">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Input Data — {SITE_NAME}">
-<meta property="og:description" content="Sortable table of calories, cost, and weight (grams) per 10g protein for foods and supplements.">
-<meta property="og:url" content="{SITE_URL}/data_table.html">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Input Data — {SITE_NAME}">
-<meta name="twitter:description" content="Sortable table of calories, cost, and weight (grams) per 10g protein for foods and supplements.">
+<title>Input Data</title>
 <style>
   html,body{{margin:0;padding:0;background:#fff;font-family:system-ui,Segoe UI,Roboto,Arial;}}
   .page{{max-width:1100px;margin:0 auto;padding:10px;}}
@@ -571,6 +521,7 @@ document.querySelectorAll("table.datatable thead th").forEach((th, colIndex) => 
       const rawA = a.cells[colIndex].innerText.trim();
       const rawB = b.cells[colIndex].innerText.trim();
 
+      // Strip non-numeric (incl. $ and commas) for numeric compare; fallback to text
       const numA = parseFloat(rawA.replace(/[^0-9.-]+/g,""));
       const numB = parseFloat(rawB.replace(/[^0-9.-]+/g,""));
 
@@ -592,85 +543,75 @@ document.querySelectorAll("table.datatable thead th").forEach((th, colIndex) => 
 # Build the table page
 write_data_table_html(df, "data_table.html")
 
-# =========================================================
-# Homepage (cards supply visible titles/descriptions; iframed pages have SEO only)
-# =========================================================
+# ---------- Homepage ----------
 index_html = """<!doctype html>
-<html lang="en">
+<html>
 <head>
 <meta charset="utf-8">
-<title>Protein Source Visualizer — Compare Cost, Calories & Weight per 10g Protein</title>
-<meta name="description" content="Interactive charts comparing protein sources by cost, calories, and food weight per 10g protein. Toggle categories, zoom/pan, and view a sortable data table.">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Protein Source Visualizer">
-<meta property="og:description" content="Interactive charts comparing protein sources by cost, calories, and weight per 10g protein.">
-<meta property="og:url" content="{site_url}">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Protein Source Visualizer">
-<meta name="twitter:description" content="Interactive charts comparing protein sources by cost, calories, and weight per 10g protein.">
+<title>Protein Visualizer</title>
 <style>
-  body{{font-family:sans-serif;background:#fafafa;margin:0;}}
-  .container{{max-width:900px;margin:auto;padding:20px;}}
-  .card{{margin:20px 0;padding:10px;background:#fff;border:1px solid #ddd;border-radius:8px;}}
-  .card h2{{margin-left:25px;}} /* shift headers 25px to the right */
-  iframe{{width:100%;border:0;border-radius:8px;display:block;}}
-  .note {{
+  body{font-family:sans-serif;background:#fafafa;margin:0;}
+  .container{max-width:900px;margin:auto;padding:20px;}
+  .card{margin:20px 0;padding:10px;background:#fff;border:1px solid #ddd;border-radius:8px;}
+  .card h2{margin-left:25px;} /* shift headers 25px to the right */
+  iframe{width:100%;border:0;border-radius:8px;display:block;}
+  .note {
     font-size: 14px;        /* same as info box */
     color: #333;            /* readable, but not too bold */
     margin: 5px 0 10px 25px;/* align with h2 (margin-left matches h2 shift) */
-  }}
-  footer p{{color:#666}}
+  }
 </style>
-<link rel="canonical" href="{site_url}/">
 </head>
 <body>
 <div class="container">
   <h1>Protein Source Visualizer</h1>
 
   <div class="card">
-    <h2>Calories vs Cost vs Weight (per 10g protein)</h2>
-    <p class="note">This graph shows the relationship between calories, cost, and food weight of various protein sources.</p>
+    <h2>Amount vs Cost vs Calories (per 10g protein)</h2>
+    <p class="note">This graph shows the relationship between calories, cost, and food amount of various protein sources.<br></p>
     <iframe src="3d_plot.html" height="900" scrolling="no"></iframe>
-    <p class="note"><i>(Scroll to zoom; Drag to orbit; Ctrl+drag to pan; Click legend items to filter; Double-click legend items to isolate. “Reset view” restores camera and re-enables all categories.)</i></p>
+    <p class="note"><i>(Scroll to zoom; Drag to orbit; Ctrl+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
   </div>
 
   <div class="card">
     <h2>Calories vs Cost (per 10g protein)</h2>
-    <p class="note">Comparing calories and cost for various protein sources, disregarding the weight of food required to total 10g protein.</p>
+    <p class="note">Comparing calories and cost for various protein sources, disregarding the amount of food required to total 10g protein.
+    <br><br></p>
     <iframe src="2d_plot1.html" height="625" scrolling="no"></iframe>
-    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate. “Reset view” restores ranges and re-enables all categories.)</i></p>
+    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
   </div>
 
   <div class="card">
-    <h2>Calories vs Weight (per 10g protein)</h2>
-    <p class="note">Comparing calories and weight for various protein sources, disregarding the cost of the amount of food required to total 10g protein.</p>
+    <h2>Calories vs Amount (per 10g protein)</h2>
+    <p class="note">Comparing calories and amount for various protein sources, disregarding the cost of the amount of food required to total 10g protein.
+    <br><br></p>
     <iframe src="2d_plot2.html" height="625" scrolling="no"></iframe>
     <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
   </div>
 
   <div class="card">
-    <h2>Cost vs Weight (per 10g protein)</h2>
-    <p class="note">Comparing cost and weight for various protein sources, disregarding the calorie total for the amount of food required to total 10g protein.</p>
+    <h2>Cost vs Amount (per 10g protein)</h2>
+    <p class="note">Comparing cost and amount for various protein sources, disregarding the calorie total for the amount of food required to total 10g protein.
+    <br><br></p>
     <iframe src="2d_plot3.html" height="625" scrolling="no"></iframe>
     <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
   </div>
 
   <div class="card">
     <h2>Food Sources</h2>
-    <p class="note">Current database of food source information. Values represent quantities per 10g protein.</p>
+    <p class="note">Current database of food source information. Values represent quantities per 10g protein.<br><br></p>
     <iframe src="data_table.html" height="600" scrolling="auto"></iframe>
-    <p class="note"><i><br>(Click column headers to sort.)</i></p>
+    <p class="note"><br><i>(Click column headers to sort.)</i></p>
   </div>
 
-  <footer><p>&copy; <span id="year"></span> {site_name}</p></footer>
+  <footer><p>&copy; <span id="year"></span> Protein Visualizer</p></footer>
 </div>
 <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
 </body>
 </html>
-""".format(site_url=SITE_URL, site_name=SITE_NAME)
+""".strip()
 
 with open("index.html", "w", encoding="utf-8") as f:
     f.write(index_html)
 
-print("✅ Site built: 3D + 2D charts and a sortable Input Data table card at the bottom. Reset buttons re-enable ALL categories, and iframed pages hide duplicate titles.")
+print("✅ Site built: 3D + 2D charts and a sortable Input Data table card at the bottom. Reset buttons now also re-enable ALL categories.")

@@ -1,8 +1,18 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Input Data</title>
+<title>Input Data — Protein Visualizer</title>
+<link rel="canonical" href="https://example.com/data_table.html">
+<meta name="description" content="Sortable table of calories, cost, and weight (grams) per 10g protein for foods and supplements.">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Input Data — Protein Visualizer">
+<meta property="og:description" content="Sortable table of calories, cost, and weight (grams) per 10g protein for foods and supplements.">
+<meta property="og:url" content="https://example.com/data_table.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Input Data — Protein Visualizer">
+<meta name="twitter:description" content="Sortable table of calories, cost, and weight (grams) per 10g protein for foods and supplements.">
 <style>
   html,body{margin:0;padding:0;background:#fff;font-family:system-ui,Segoe UI,Roboto,Arial;}
   .page{max-width:1100px;margin:0 auto;padding:10px;}
@@ -30,7 +40,7 @@
       <th>Category</th>
       <th>Calories</th>
       <th>Cost</th>
-      <th>Amount (grams)</th>
+      <th>Weight (grams)</th>
     </tr>
   </thead>
   <tbody>
@@ -390,7 +400,6 @@ document.querySelectorAll("table.datatable thead th").forEach((th, colIndex) => 
       const rawA = a.cells[colIndex].innerText.trim();
       const rawB = b.cells[colIndex].innerText.trim();
 
-      // Strip non-numeric (incl. $ and commas) for numeric compare; fallback to text
       const numA = parseFloat(rawA.replace(/[^0-9.-]+/g,""));
       const numB = parseFloat(rawB.replace(/[^0-9.-]+/g,""));
 
