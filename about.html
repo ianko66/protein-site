@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>About — Protein Source Visualizer</title>
+<link rel="canonical" href="https://example.com/about.html">
+<meta name="description" content="Learn what this site shows and how to interpret the charts.">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="About — Protein Source Visualizer">
+<meta property="og:description" content="Learn what this site shows and how to interpret the charts.">
+<meta property="og:url" content="https://example.com/about.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About — Protein Source Visualizer">
+<meta name="twitter:description" content="Learn what this site shows and how to interpret the charts.">
+<style>
+  
+:root{ --hdrH: 56px; } /* updated by site.js for offsets only */
+.site-header{position:sticky;top:0;z-index:9999;background:#111;color:#fff;border-bottom:1px solid #0f0f0f}
+.site-header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 12px;min-height:56px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+.brand .logo{display:inline-flex;width:30px;height:30px;overflow:hidden;border-radius:6px;align-items:center;justify-content:center;background:#222}
+.brand img{width:30px;height:30px;object-fit:contain;display:block}
+.brand .title{font-weight:700;letter-spacing:.2px}
+.nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav a{color:#fff;text-decoration:none;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:8px 12px;font-size:14px;opacity:.95}
+.nav a:hover{opacity:1;background:#202020}
+.nav a.active{background:#0a58ca;border-color:#0a58ca}
+.nav a:focus{outline:2px solid #0a58ca;outline-offset:2px}
+@media (max-width:720px){
+  .site-header .wrap{padding:10px}
+  .nav{gap:8px}
+  .nav a{padding:8px 10px}
+}
+
+  body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:0;background:#fafafa;}
+  .container{max-width:900px;margin:0 auto;padding:20px;}
+  .card{background:#fff;border:1px solid #ddd;border-radius:8px;padding:16px;line-height:1.55}
+  h1{margin:0 0 10px}
+  p{margin:8px 0}
+  ul{margin:8px 0 8px 24px}
+  code{background:#f1f1f1;padding:2px 6px;border-radius:6px}
+</style>
+</head>
+<body>
+  
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Protein Source Visualizer Home">
+      <div class="logo" aria-hidden="true"><span style="font-size:12px;color:#ccc">P</span></div>
+      <span class="title">Protein Source Visualizer</span>
+    </a>
+    <nav class="nav" aria-label="Primary" id="primary-nav">
+      <a class="navlink"   href="index.html#home"    data-nav="home">Home</a>
+      <a class="navlink" href="graphs.html"        data-nav="graphs">Graphs</a>
+      <a class="navlink" href="guides.html"        data-nav="guides">Guides &amp; Explainers</a>
+      <a class="navlink"   href="foods.html"         data-nav="food">Food Sources</a>
+      <a class="navlink active"  href="about.html"         data-nav="about">About</a>
+    </nav>
+  </div>
+</header>
+
+  <script src="site.js"></script>
+  <div class="container">
+    <div class="card">
+      <h1>About</h1>
+      <p><b>Protein Source Visualizer</b> helps you compare protein sources by normalizing everything to <b>10g of protein</b>. Each chart lets you explore the trade-offs between <i>calories</i>, <i>cost</i>, and <i>weight (grams)</i> required to hit that protein target.</p>
+      <ul>
+        <li><b>3D Chart:</b> Calories vs Cost vs Weight per 10g protein.</li>
+        <li><b>2D Charts:</b> Pairwise comparisons (Calories–Cost, Calories–Weight, Cost–Weight).</li>
+        <li><b>Food Sources:</b> Sortable table with the underlying values.</li>
+      </ul>
+      <p>Hover points to see details, click legend items to filter categories, double-click a legend item to isolate it, and use the <i>Reset</i> button on each page to restore the default view.</p>
+      <p>If you’d like to contribute data corrections or request features, feel free to open an issue or contact the maintainer.</p>
+    </div>
+  </div>
+</body>
+</html>

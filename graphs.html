@@ -2,21 +2,18 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Protein Source Visualizer</title>
+<title>Graphs — Protein Source Visualizer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Protein Source Visualizer",
-  "url": "https://example.com",
-  "potentialAction": {
-    "@type": "SearchAction",
-    "target": "https://example.com/data_table.html?q={search_term_string}",
-    "query-input": "required name=search_term_string"
-  }
-}
-</script>
+<link rel="canonical" href="https://example.com/graphs.html">
+<meta name="description" content="All interactive charts comparing calories, cost, and weight per 10g protein.">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Graphs — Protein Source Visualizer">
+<meta property="og:description" content="Explore 3D and 2D charts for protein sources.">
+<meta property="og:url" content="https://example.com/graphs.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Graphs — Protein Source Visualizer">
+<meta name="twitter:description" content="Explore 3D and 2D charts for protein sources.">
 <style>
   
 :root{ --hdrH: 56px; } /* updated by site.js for offsets only */
@@ -47,7 +44,6 @@
   .links a:hover{text-decoration:underline}
   iframe{width:100%;border:0;border-radius:8px;display:block;}
   footer{margin-top:24px;color:#666}
-  .anchor-offset{scroll-margin-top:calc(var(--hdrH) + 14px);}
 </style>
 </head>
 <body>
@@ -59,8 +55,8 @@
       <span class="title">Protein Source Visualizer</span>
     </a>
     <nav class="nav" aria-label="Primary" id="primary-nav">
-      <a class="navlink active"   href="index.html#home"    data-nav="home">Home</a>
-      <a class="navlink" href="graphs.html"        data-nav="graphs">Graphs</a>
+      <a class="navlink"   href="index.html#home"    data-nav="home">Home</a>
+      <a class="navlink active" href="graphs.html"        data-nav="graphs">Graphs</a>
       <a class="navlink" href="guides.html"        data-nav="guides">Guides &amp; Explainers</a>
       <a class="navlink"   href="foods.html"         data-nav="food">Food Sources</a>
       <a class="navlink"  href="about.html"         data-nav="about">About</a>
@@ -71,48 +67,43 @@
 <script src="site.js"></script>
 <div class="container">
 
-  <div class="card anchor-offset" id="graphs">
+  <div class="card">
     <h2>Calories vs Cost vs Weight (per 10g protein)</h2>
-    <p class="note">Preview of the 3D chart. Visit the <b>Graphs</b> page for the full experience.</p>
+    <p class="note">Relationship between calories, cost, and food weight of various protein sources.</p>
     <iframe src="3d_plot_embed.html" height="900" scrolling="no" title="3D Chart"></iframe>
-    <p class="note"><i>(Scroll to zoom; Drag to orbit; Ctrl+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
     <p class="links">
-      <a href="graphs.html">See all graphs</a> ·
-      <a href="3d_plot.html" target="_blank" rel="noopener">Open this chart</a> ·
-      <a href="data/foods.csv" download>CSV</a>
+      <a href="3d_plot.html" target="_blank" rel="noopener">Open this chart in a new tab</a>
+      · <a href="data/foods.csv" download>Download data (CSV)</a>
     </p>
   </div>
 
   <div class="card">
     <h2>Calories vs Cost (per 10g protein)</h2>
+    <p class="note">Comparing calories and cost for various protein sources.</p>
     <iframe src="2d_plot1_embed.html" height="625" scrolling="no" title="Calories vs Cost"></iframe>
-    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
     <p class="links">
-      <a href="graphs.html">See all graphs</a> ·
-      <a href="2d_plot1.html" target="_blank" rel="noopener">Open this chart</a> ·
-      <a href="data/foods.csv" download>CSV</a>
+      <a href="2d_plot1.html" target="_blank" rel="noopener">Open this chart in a new tab</a>
+      · <a href="data/foods.csv" download>Download data (CSV)</a>
     </p>
   </div>
 
   <div class="card">
     <h2>Calories vs Weight (per 10g protein)</h2>
+    <p class="note">Comparing calories and weight for various protein sources.</p>
     <iframe src="2d_plot2_embed.html" height="625" scrolling="no" title="Calories vs Weight"></iframe>
-    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
     <p class="links">
-      <a href="graphs.html">See all graphs</a> ·
-      <a href="2d_plot2.html" target="_blank" rel="noopener">Open this chart</a> ·
-      <a href="data/foods.csv" download>CSV</a>
+      <a href="2d_plot2.html" target="_blank" rel="noopener">Open this chart in a new tab</a>
+      · <a href="data/foods.csv" download>Download data (CSV)</a>
     </p>
   </div>
 
   <div class="card">
     <h2>Cost vs Weight (per 10g protein)</h2>
+    <p class="note">Comparing cost and weight for various protein sources.</p>
     <iframe src="2d_plot3_embed.html" height="625" scrolling="no" title="Cost vs Weight"></iframe>
-    <p class="note"><i>(Scroll to zoom; Shift+drag to pan; Click legend items to filter; Double-click legend items to isolate.)</i></p>
     <p class="links">
-      <a href="graphs.html">See all graphs</a> ·
-      <a href="2d_plot3.html" target="_blank" rel="noopener">Open this chart</a> ·
-      <a href="data/foods.csv" download>CSV</a>
+      <a href="2d_plot3.html" target="_blank" rel="noopener">Open this chart in a new tab</a>
+      · <a href="data/foods.csv" download>Download data (CSV)</a>
     </p>
   </div>
 

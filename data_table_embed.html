@@ -15,30 +15,12 @@
 <meta name="twitter:description" content="Sortable table of calories, cost, and weight (grams) per 10g protein for foods and supplements.">
 <style>
 
-  
-:root{ --hdrH: 56px; } /* updated by site.js for offsets only */
-.site-header{position:sticky;top:0;z-index:9999;background:#111;color:#fff;border-bottom:1px solid #0f0f0f}
-.site-header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 12px;min-height:56px}
-.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
-.brand .logo{display:inline-flex;width:30px;height:30px;overflow:hidden;border-radius:6px;align-items:center;justify-content:center;background:#222}
-.brand img{width:30px;height:30px;object-fit:contain;display:block}
-.brand .title{font-weight:700;letter-spacing:.2px}
-.nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.nav a{color:#fff;text-decoration:none;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:8px 12px;font-size:14px;opacity:.95}
-.nav a:hover{opacity:1;background:#202020}
-.nav a.active{background:#0a58ca;border-color:#0a58ca}
-.nav a:focus{outline:2px solid #0a58ca;outline-offset:2px}
-@media (max-width:720px){
-  .site-header .wrap{padding:10px}
-  .nav{gap:8px}
-  .nav a{padding:8px 10px}
-}
-
+  :root{ --hdrH: 56px; }
   html,body{margin:0;padding:0;background:#fff;font-family:system-ui,Segoe UI,Roboto,Arial;}
-  .page{max-width:1100px;margin:0 auto;padding:10px;}
+  .page{max-width:1100px;margin:0 auto;padding:0 10px 10px;}
   .wrap{background:#fff;border:1px solid #e2e2e2;border-radius:8px;padding:10px;}
   table.datatable{width:100%;border-collapse:collapse;font-size:14px;cursor:default;}
-  table.datatable thead th{text-align:left;position:sticky;top:calc(var(--hdrH) + 1px);background:#fafafa;border-bottom:1px solid #ddd;padding:10px;cursor:pointer;z-index:10;}
+  table.datatable thead th{text-align:left;position:sticky;top:0px;background:#fafafa;border-bottom:1px solid #ddd;padding:10px;cursor:pointer;z-index:10;}
   table.datatable tbody td{border-bottom:1px solid #f0f0f0;padding:10px;}
   table.datatable tbody tr:nth-child(odd){background:#fcfcfc;}
   th.sort-asc::after{content:" ▲";font-size:12px;}
@@ -48,22 +30,6 @@
 </head>
 <body>
   
-<header class="site-header">
-  <div class="wrap">
-    <a class="brand" href="index.html" aria-label="Protein Source Visualizer Home">
-      <div class="logo" aria-hidden="true"><span style="font-size:12px;color:#ccc">P</span></div>
-      <span class="title">Protein Source Visualizer</span>
-    </a>
-    <nav class="nav" aria-label="Primary" id="primary-nav">
-      <a class="navlink"   href="index.html#home"    data-nav="home">Home</a>
-      <a class="navlink" href="graphs.html"        data-nav="graphs">Graphs</a>
-      <a class="navlink" href="guides.html"        data-nav="guides">Guides &amp; Explainers</a>
-      <a class="navlink active"   href="foods.html"         data-nav="food">Food Sources</a>
-      <a class="navlink"  href="about.html"         data-nav="about">About</a>
-    </nav>
-  </div>
-</header>
-
   <div class="page">
     <div class="wrap">
       <table class="dataframe datatable">
@@ -417,7 +383,7 @@
 </table>
     </div>
   </div>
-<script src="site.js"></script>
+
 <script>
 // Column sorting (numeric-aware; handles $)
 document.querySelectorAll("table.datatable thead th").forEach((th, colIndex) => {

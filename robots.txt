@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
 Sitemap: https://example.com/sitemap.xml
+
+# Avoid indexing embed-only clones
+User-agent: *
+Disallow: /*_embed.html$

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Food Sources — Protein Source Visualizer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="canonical" href="https://example.com/foods.html">
+<meta name="description" content="Explore the full table of foods and their calories, cost, and grams per 10g protein.">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Food Sources — Protein Source Visualizer">
+<meta property="og:description" content="Sortable table of foods per 10g protein.">
+<meta property="og:url" content="https://example.com/foods.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Food Sources — Protein Source Visualizer">
+<meta name="twitter:description" content="Sortable table of foods per 10g protein.">
+<style>
+  
+:root{ --hdrH: 56px; } /* updated by site.js for offsets only */
+.site-header{position:sticky;top:0;z-index:9999;background:#111;color:#fff;border-bottom:1px solid #0f0f0f}
+.site-header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 12px;min-height:56px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+.brand .logo{display:inline-flex;width:30px;height:30px;overflow:hidden;border-radius:6px;align-items:center;justify-content:center;background:#222}
+.brand img{width:30px;height:30px;object-fit:contain;display:block}
+.brand .title{font-weight:700;letter-spacing:.2px}
+.nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav a{color:#fff;text-decoration:none;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:8px 12px;font-size:14px;opacity:.95}
+.nav a:hover{opacity:1;background:#202020}
+.nav a.active{background:#0a58ca;border-color:#0a58ca}
+.nav a:focus{outline:2px solid #0a58ca;outline-offset:2px}
+@media (max-width:720px){
+  .site-header .wrap{padding:10px}
+  .nav{gap:8px}
+  .nav a{padding:8px 10px}
+}
+
+  body{font-family:sans-serif;background:#fafafa;margin:0;}
+  .container{max-width:900px;margin:auto;padding:20px;}
+  .card{margin:20px 0;padding:10px;background:#fff;border:1px solid #ddd;border-radius:8px;}
+  .card h2{margin-left:25px;}
+  .note{font-size:14px;color:#333;margin:5px 0 10px 25px;}
+  .links{margin:8px 0 0 25px;font-size:14px;color:#555;}
+  .links a{color:#0a58ca;text-decoration:none}
+  .links a:hover{text-decoration:underline}
+  iframe{width:100%;border:0;border-radius:8px;display:block;}
+  footer{margin-top:24px;color:#666}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Protein Source Visualizer Home">
+      <div class="logo" aria-hidden="true"><span style="font-size:12px;color:#ccc">P</span></div>
+      <span class="title">Protein Source Visualizer</span>
+    </a>
+    <nav class="nav" aria-label="Primary" id="primary-nav">
+      <a class="navlink"   href="index.html#home"    data-nav="home">Home</a>
+      <a class="navlink" href="graphs.html"        data-nav="graphs">Graphs</a>
+      <a class="navlink" href="guides.html"        data-nav="guides">Guides &amp; Explainers</a>
+      <a class="navlink active"   href="foods.html"         data-nav="food">Food Sources</a>
+      <a class="navlink"  href="about.html"         data-nav="about">About</a>
+    </nav>
+  </div>
+</header>
+
+<script src="site.js"></script>
+<div class="container">
+  <div class="card">
+    <h2>Food Sources</h2>
+    <p class="note">Sortable table with values normalized to 10g of protein.</p>
+    <!-- Use embed version so its sticky header uses top:0 and never overlaps the dark site header -->
+    <iframe src="data_table_embed.html" height="640" scrolling="auto" title="Food Sources Table"></iframe>
+    <br>
+    <p class="links">
+      <a href="data/foods.csv" download>Download data (CSV)</a>
+    </p>
+  </div>
+
+  <footer><p>&copy; <span id="year"></span> Protein Source Visualizer</p></footer>
+</div>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body>
+</html>

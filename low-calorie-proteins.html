@@ -2,18 +2,37 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Low-Calorie Protein Picks (per 10g protein) — Protein Visualizer</title>
+<title>Low-Calorie Protein Picks (per 10g protein) — Protein Source Visualizer</title>
 <link rel="canonical" href="https://example.com/low-calorie-proteins.html">
 <meta name="description" content="Lowest calorie protein sources per 10g protein, with cost and grams required.">
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Low-Calorie Protein Picks (per 10g protein) — Protein Visualizer">
+<meta property="og:title" content="Low-Calorie Protein Picks (per 10g protein) — Protein Source Visualizer">
 <meta property="og:description" content="Lowest calorie protein sources per 10g protein, with cost and grams required.">
 <meta property="og:url" content="https://example.com/low-calorie-proteins.html">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Low-Calorie Protein Picks (per 10g protein) — Protein Visualizer">
+<meta name="twitter:title" content="Low-Calorie Protein Picks (per 10g protein) — Protein Source Visualizer">
 <meta name="twitter:description" content="Lowest calorie protein sources per 10g protein, with cost and grams required.">
 <style>
+  
+:root{ --hdrH: 56px; } /* updated by site.js for offsets only */
+.site-header{position:sticky;top:0;z-index:9999;background:#111;color:#fff;border-bottom:1px solid #0f0f0f}
+.site-header .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 12px;min-height:56px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#fff}
+.brand .logo{display:inline-flex;width:30px;height:30px;overflow:hidden;border-radius:6px;align-items:center;justify-content:center;background:#222}
+.brand img{width:30px;height:30px;object-fit:contain;display:block}
+.brand .title{font-weight:700;letter-spacing:.2px}
+.nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nav a{color:#fff;text-decoration:none;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:8px 12px;font-size:14px;opacity:.95}
+.nav a:hover{opacity:1;background:#202020}
+.nav a.active{background:#0a58ca;border-color:#0a58ca}
+.nav a:focus{outline:2px solid #0a58ca;outline-offset:2px}
+@media (max-width:720px){
+  .site-header .wrap{padding:10px}
+  .nav{gap:8px}
+  .nav a{padding:8px 10px}
+}
+
   body{font-family:system-ui,Segoe UI,Roboto,Arial;margin:0;background:#fafafa;}
   .container{max-width:900px;margin:0 auto;padding:20px;}
   .card{background:#fff;border:1px solid #ddd;border-radius:8px;padding:16px;}
@@ -23,9 +42,29 @@
   table.mini th, table.mini td{border-bottom:1px solid #eee;padding:8px;text-align:left}
   .links a{color:#0a58ca;text-decoration:none}
   .links a:hover{text-decoration:underline}
+  .actions{margin-top:14px}
+  .btn{display:inline-block;background:#0a58ca;border:1px solid #0a58ca;color:#fff;text-decoration:none;padding:10px 12px;border-radius:10px}
+  .btn:hover{background:#0b63e6}
 </style>
 </head>
 <body>
+  
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Protein Source Visualizer Home">
+      <div class="logo" aria-hidden="true"><span style="font-size:12px;color:#ccc">P</span></div>
+      <span class="title">Protein Source Visualizer</span>
+    </a>
+    <nav class="nav" aria-label="Primary" id="primary-nav">
+      <a class="navlink"   href="index.html#home"    data-nav="home">Home</a>
+      <a class="navlink" href="graphs.html"        data-nav="graphs">Graphs</a>
+      <a class="navlink active" href="guides.html"        data-nav="guides">Guides &amp; Explainers</a>
+      <a class="navlink"   href="foods.html"         data-nav="food">Food Sources</a>
+      <a class="navlink"  href="about.html"         data-nav="about">About</a>
+    </nav>
+  </div>
+</header>
+
   <div class="container">
     <div class="card">
       <h1>Low-Calorie Protein Picks (per 10g protein)</h1>
@@ -146,12 +185,85 @@
       <td>$0.16</td>
       <td>32.26</td>
     </tr>
+    <tr>
+      <td>Seitan</td>
+      <td>Grains</td>
+      <td>57.14</td>
+      <td>$0.38</td>
+      <td>47.62</td>
+    </tr>
+    <tr>
+      <td>Lean pork loin</td>
+      <td>Red Meat &amp; Game</td>
+      <td>57.69</td>
+      <td>$0.42</td>
+      <td>38.46</td>
+    </tr>
+    <tr>
+      <td>Greek yogurt (non-fat)</td>
+      <td>Dairy</td>
+      <td>59.00</td>
+      <td>$0.80</td>
+      <td>100.00</td>
+    </tr>
+    <tr>
+      <td>Venison</td>
+      <td>Red Meat &amp; Game</td>
+      <td>60.77</td>
+      <td>$0.50</td>
+      <td>38.46</td>
+    </tr>
+    <tr>
+      <td>Mushrooms (raw)</td>
+      <td>Vegetables</td>
+      <td>70.97</td>
+      <td>$1.94</td>
+      <td>322.58</td>
+    </tr>
+    <tr>
+      <td>Organic plant-based protein</td>
+      <td>Supplements</td>
+      <td>75.81</td>
+      <td>$0.98</td>
+      <td>23.26</td>
+    </tr>
+    <tr>
+      <td>Spinach (raw)</td>
+      <td>Vegetables</td>
+      <td>79.31</td>
+      <td>$1.72</td>
+      <td>344.83</td>
+    </tr>
+    <tr>
+      <td>Cottage cheese (low-fat)</td>
+      <td>Dairy</td>
+      <td>89.09</td>
+      <td>$0.55</td>
+      <td>90.91</td>
+    </tr>
+    <tr>
+      <td>Tofu (firm)</td>
+      <td>Soy</td>
+      <td>95.00</td>
+      <td>$0.38</td>
+      <td>125.00</td>
+    </tr>
+    <tr>
+      <td>Beef sirloin</td>
+      <td>Red Meat &amp; Game</td>
+      <td>96.15</td>
+      <td>$0.46</td>
+      <td>38.46</td>
+    </tr>
   </tbody>
 </table>
       <p class="links" style="margin-top:12px">
-        <a href="/">← Back to homepage</a> ·
-        <a href="/data_table.html">View full data table</a>
+        <a href="graphs.html">Explore all graphs</a> ·
+        <a href="foods.html">Food Sources page</a>
       </p>
+      <div class="actions">
+        <a class="btn" href="2d_plot2.html" title="Calories vs Weight chart">See related chart</a>
+      </div>
     </div>
   </div>
 </body>
